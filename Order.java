@@ -3,8 +3,8 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.time.LocalDate;
+import java.time.LocalTime;
 import java.util.ArrayList;
-import java.util.Objects;
 import java.util.Scanner;
 
 public class Order {
@@ -14,11 +14,11 @@ public class Order {
         Scanner input = new Scanner(System.in);
         String placeOrder = input.nextLine();
 
-        ArrayList<Objects> order = new ArrayList<>();
+        ArrayList<Object> order = new ArrayList<Object>();
 
         if (placeOrder.equalsIgnoreCase("Y")) {
             order.add(LocalDate.now());
-            order.add(LocalDate.now());
+            order.add(LocalTime.now());
             System.out.println("\nHere is the menu ");
             System.out.println("\nCUPCAKES: ");
 
@@ -32,17 +32,21 @@ public class Order {
                 cupcakeMenu.get(i).type();
 
                 System.out.println("\nPrice: " + cupcakeMenu.get(i).getPrice());
+            }
                 System.out.println();
 
                 System.out.println("\nDRINKS: ");
 
-                for (i = 0; i < drinkMenu.size(); i++) {
+                for (int i = 0; i < drinkMenu.size(); i++) {
+                    itemNumber = itemNumber + 1;
+
                     System.out.println(itemNumber);
+
                     drinkMenu.get(i).type();
+
                     System.out.println("\nPrice: " + drinkMenu.get(i).getPrice());
-                    System.out.println();
                 }
-            }
+                    System.out.println();
 
         } else {
             System.out.println("Have a nice day then.");
@@ -50,7 +54,7 @@ public class Order {
 
         boolean ordering = true;
 
-        while (ordering == true) {
+        while (ordering) {
             System.out.println("\nWhat would you like to order? Please use the number associated with each item to order.");
 
             int orderChoice = input.nextInt();
@@ -76,7 +80,9 @@ public class Order {
                 System.out.println("\nItem added to order");
             } else {
                 System.out.println("\nSorry, we don’t seem to have that on the menu.");
+
                 System.out.println("\nWould you like to continue ordering? (Y/N)");
+
                 placeOrder = input.nextLine();
 
                 if (!placeOrder.equalsIgnoreCase("Y")) {
@@ -90,9 +96,40 @@ public class Order {
         double subtotal = 0.0;
 
         for (int i = 2; i < order.size(); i++) {
+
             if (order.get(i).equals(cupcakeMenu.get(0))) {
                 cupcakeMenu.get(0).type();
+                System.out.println("\nPrice of that cupcake: " + cupcakeMenu.get(0).getPrice());
+                subtotal = subtotal + cupcakeMenu.get(0).getPrice();
             }
+            if (order.get(i).equals(cupcakeMenu.get(1))) {
+                cupcakeMenu.get(1).type();
+                System.out.println("\nPrice of that cupcake: " + cupcakeMenu.get(1).getPrice());
+                subtotal = subtotal + cupcakeMenu.get(1).getPrice();
+            }
+            if (order.get(i).equals(cupcakeMenu.get(2))) {
+                cupcakeMenu.get(2).type();
+                System.out.println("\nPrice of that cupcake: " + cupcakeMenu.get(2).getPrice());
+                subtotal = subtotal + cupcakeMenu.get(2).getPrice();
+            }
+            if (order.get(i).equals(drinkMenu.get(0))) {
+                drinkMenu.get(0).type();
+                System.out.println("\nPrice of that drink: " + drinkMenu.get(0).getPrice());
+                subtotal = subtotal + drinkMenu.get(0).getPrice();
+            }
+            if (order.get(i).equals(drinkMenu.get(1))){
+                drinkMenu.get(1).type();
+                System.out.println("\nPrice of that drink: " + drinkMenu.get(1).getPrice());
+                subtotal = subtotal + drinkMenu.get(1).getPrice();
+            }
+            if (order.get(i).equals(drinkMenu.get(2))) {
+                drinkMenu.get(2).type();
+                System.out.println("\nPrice of that drink: " + drinkMenu.get(2).getPrice());
+                subtotal = subtotal + drinkMenu.get(2).getPrice();
+            }
+            System.out.println(subtotal);
+            new CreateFile();
+            new WriteToFile(order);
         }
 
     }
@@ -121,7 +158,7 @@ class CreateFile {
 }
 
 class WriteToFile {
-    public WriteToFile(ArrayList<Objects> order) {
+    public WriteToFile(ArrayList<Object> order) {
         try {
             FileWriter fw = new FileWriter("salesData.txt", true);
 
@@ -139,4 +176,5 @@ class WriteToFile {
             System.out.println("An error occurred");
         }
     }
+
 }
